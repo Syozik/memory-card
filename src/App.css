@@ -4,11 +4,11 @@
   color: peachpuff;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url("src/assets/Group_Image.jpg") no-repeat;
   text-shadow: 1px 1px 3px black;
+  background-color: #a5a58d; 
+  background-image: linear-gradient(120deg, #a5a58d, #343434, #1a472a);
   background-size: cover;
-  background-position: 0px -100px;
+  height: 100%;
 }
 
 header {
@@ -17,11 +17,10 @@ header {
   padding: 0 50px 0 10px;
 }
 .scores {
-  color: black;
-  text-shadow: 1px 1px 10px rgb(63, 128, 202);
-  background-color: rgba(247, 187, 138, 0.5);
+  text-shadow: none;
   padding: 3px 20px 3px 5px;
 }
+
 .mainTitle {
   margin-top: 10px;
   color: white;
@@ -61,4 +60,10 @@ button {
 
 .difficulty:hover {
   box-shadow: none;
+}
+
+.rules{
+  margin-left: 10px;
+  color: #ddbc01;
+  
 }

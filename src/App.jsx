@@ -29,6 +29,9 @@ function Cards({ data, clickedCardsState, difficultyState }) {
 
   return (
     <>
+      <h4 className="rules" style={{visibility: gameOver ? "hidden" : "visible"}}>
+        Click each card, without clicking the same card twice!
+      </h4>
       <ul
         style={{
           display: "grid",
@@ -79,7 +82,6 @@ function Cards({ data, clickedCardsState, difficultyState }) {
         <h3
           style={{
             color: "rgb(255,255,255)",
-            background: "rgba(0, 0, 0, 0.6)",
             padding: "2px 20px",
           }}
         >
