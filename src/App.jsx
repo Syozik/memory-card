@@ -1,29 +1,28 @@
 import { useState, useEffect, Children, Fragment } from "react";
 
 const HarryPotterUrl = "https://hp-api.onrender.com/api/characters";
-const modes = { Easy: 6, Medium: 10, Hard: 14 };
+const modes = { Easy: 6, Medium: 10, Hard: 15 };
 
 import "./App.css";
 
-function Cards({ data, clickedCardsState }) {
+function Cards({ data, clickedCardsState, difficultyState }) {
   const [gameOver, setGameOver] = useState(false);
   const [clickedCards, setClickedCards] = clickedCardsState;
-  
+  const [difficulty, setDifficulty] = difficultyState;
+
   shuffle(data);
 
   const handleClick = function (card) {
-    if (!clickedCards.includes(card.target.id)){
+    if (!clickedCards.includes(card.target.id)) {
       setClickedCards([...clickedCards, card.target.id]);
       shuffle(data);
-      return
+      return;
     }
-    
     setGameOver(true);
-
   };
-  
-  useEffect(()=>{
-    if (clickedCards.length == data.length && data.length !=0 ){
+
+  useEffect(() => {
+    if (clickedCards.length == data.length && data.length != 0) {
       setGameOver(true);
     }
   }, [clickedCards]);
@@ -45,6 +44,7 @@ function Cards({ data, clickedCardsState }) {
               onClick={handleClick}
               style={{
                 cursor: "pointer",
+                background: "black",
                 visibility: gameOver ? "hidden" : "visible",
               }}
             >
@@ -69,15 +69,34 @@ function Cards({ data, clickedCardsState }) {
         style={{
           position: "absolute",
           top: "100px",
-          left: "45vw",
+          left: "43vw",
           visibility: gameOver ? "visible" : "hidden",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <h3 style={{color: "rgb(200,200,200)"}}>{clickedCards.length < data.length ? "Game Over!" : "You won!"} Your score: <span style={{textDecoration:"underline"}}>{clickedCards.length}</span></h3>
-        <button onClick={()=>window.location.reload()}>NEW GAME</button>
+        <h3
+          style={{
+            color: "rgb(255,255,255)",
+            background: "rgba(0, 0, 0, 0.6)",
+            padding: "2px 20px",
+          }}
+        >
+          {clickedCards.length < data.length ? "Game Over!" : "You won!"} Your
+          score:{" "}
+          <span style={{ textDecoration: "underline" }}>
+            {clickedCards.length}
+          </span>
+        </h3>
+        <button
+          onClick={() => {
+            setClickedCards([]);
+            setDifficulty(null);
+          }}
+        >
+          NEW GAME
+        </button>
       </div>
     </>
   );
@@ -97,8 +116,8 @@ function shuffle(array) {
   }
 }
 
-function StartGame({ url, clickedCardsState, difficulty = "Easy"}) {
-  const numberOfCards = modes[difficulty];
+function StartGame({ url, clickedCardsState, difficultyState }) {
+  const numberOfCards = modes[difficultyState[0]];
   let [images, setImages] = useState([]);
   useEffect(() => {
     fetch(url, { mode: "cors" })
@@ -109,23 +128,45 @@ function StartGame({ url, clickedCardsState, difficulty = "Easy"}) {
       .catch((error) => console.log(error));
   }, []);
 
-  if (images != []) return <Cards data={images} clickedCardsState={clickedCardsState} />;
+  if (images != [])
+    return (
+      <Cards
+        data={images}
+        clickedCardsState={clickedCardsState}
+        difficultyState={difficultyState}
+      />
+    );
 }
 
-function StartingWindow({difficultyState}){
+function Button({ title, onClick }) {
+  return (
+    <button onClick={onClick} className="difficulty" id={title}>
+      {title}
+    </button>
+  );
+}
+
+function StartingWindow({ difficultyState }) {
   const [difficulty, setDifficulty] = difficultyState;
-  
-  function handleClick(button){
+
+  function handleClick(button) {
     setDifficulty(button.target.id);
   }
 
   return (
-    <div style={{display:"flex", gap: "10px"}}>
-      <button onClick={handleClick} id="Easy">Easy</button>
-      <button onClick={handleClick} id="Medium">Medium</button>
-      <button onClick={handleClick} id="Hard">Hard</button>
+    <div
+      style={{
+        justifyContent: "center",
+        display: difficulty == null ? "flex" : "none",
+        gap: "10px",
+        marginTop: "50px",
+      }}
+    >
+      <Button onClick={handleClick} title="Easy" />
+      <Button onClick={handleClick} title="Medium" />
+      <Button onClick={handleClick} title="Hard" />
     </div>
-  )
+  );
 }
 
 function App() {
@@ -145,7 +186,13 @@ function App() {
         </div>
       </header>
       <StartingWindow difficultyState={[difficulty, setDifficulty]} />
-      {difficulty!=null && <StartGame url={HarryPotterUrl} clickedCardsState = {[clickedCards, setClickedCards]} difficulty={difficulty} /> }
+      {difficulty != null && (
+        <StartGame
+          url={HarryPotterUrl}
+          clickedCardsState={[clickedCards, setClickedCards]}
+          difficultyState={[difficulty, setDifficulty]}
+        />
+      )}
     </>
   );
 }

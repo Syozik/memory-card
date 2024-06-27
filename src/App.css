@@ -4,14 +4,24 @@
   color: peachpuff;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("src/assets/Group_Image.jpg") no-repeat;
+  text-shadow: 1px 1px 3px black;
+  background-size: cover;
+  background-position: 0px -100px;
 }
 
-header{
+header {
   display: flex;
   align-items: center;
   padding: 0 50px 0 10px;
 }
-
+.scores {
+  color: black;
+  text-shadow: 1px 1px 10px rgb(63, 128, 202);
+  background-color: rgba(247, 187, 138, 0.5);
+  padding: 3px 20px 3px 5px;
+}
 .mainTitle {
   margin-top: 10px;
   color: white;
@@ -21,22 +31,34 @@ header{
   margin-right: auto;
 }
 
-ul{
-  padding: 0; 
+ul {
+  padding: 0;
   place-items: center;
 }
 
-li{
+li {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-img{
+img {
   transition: transform ease-in 0.15s;
 }
 
-img:hover{
+img:hover {
   transform: scale(1.02);
   box-shadow: 0 0 20px 5px grey !important;
+}
+
+button {
+  padding: 5px 50px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 1px 3px 8px white;
+  transition: box-shadow 0.15s ease-in;
+}
+
+.difficulty:hover {
+  box-shadow: none;
 }
