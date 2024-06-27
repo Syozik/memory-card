@@ -1,0 +1,42 @@
+:root {
+  background-color: black;
+  font-family: Inter;
+  color: peachpuff;
+  display: flex;
+  flex-direction: column;
+}
+
+header{
+  display: flex;
+  align-items: center;
+  padding: 0 50px 0 10px;
+}
+
+.mainTitle {
+  margin-top: 10px;
+  color: white;
+  font-size: 3rem;
+  text-decoration: underline;
+  letter-spacing: 1px;
+  margin-right: auto;
+}
+
+ul{
+  padding: 0; 
+  place-items: center;
+}
+
+li{
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+img{
+  transition: transform ease-in 0.15s;
+}
+
+img:hover{
+  transform: scale(1.02);
+  box-shadow: 0 0 20px 5px grey !important;
+}
